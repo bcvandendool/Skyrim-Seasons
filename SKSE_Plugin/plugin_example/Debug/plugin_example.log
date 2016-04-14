@@ -1,0 +1,13 @@
+﻿Build started 14-4-2016 19:38:02.
+     1>Project "D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\plugin_example\plugin_example.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\\..\common" /I"D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\\" /I"D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\\.." /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D PLUGIN_EXAMPLE_EXPORTS /D _WINDLL /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /FIcommon/IPrefix.h /analyze- /errorReport:prompt MyPlugin.cpp
+         MyPlugin.cpp
+     1>d:\modding\skyrim\skyrim-seasons\skse_plugin\plugin_example\myplugin.cpp(5): warning C4005: '_WIN32_WINNT' : macro redefinition
+                 d:\modding\skyrim\skyrim-seasons\skse_plugin\common\iprefix.h(13) : see previous definition of '_WIN32_WINNT'
+     1>d:\modding\skyrim\skyrim-seasons\skse_plugin\plugin_example\myplugin.cpp(19): error C3861: 'CreateSymbolicLinkA': identifier not found
+     1>Done Building Project "D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\plugin_example\plugin_example.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.90
