@@ -2,20 +2,43 @@
 #include <windows.h>
 #include "skse/Utilities.h"
 
-namespace MyPluginNamespace {
-	float ChangeSeasonLod(StaticFunctionTag *base, UInt32 n)
-	{
-		DWORD flag = 0x1;
-		std::string NormalDirectoryString = GetRuntimeDirectory() + "";
-		LPCSTR NormalDirectory = const_cast<char *>(NormalDirectoryString.c_str());
+typedef BOOL(WINAPI* CreateSymbolicLinkProc) (LPCSTR, LPCSTR, DWORD);
 
+namespace MyPluginNamespace {
+	float ChangeSeasonLodDirectory(StaticFunctionTag *base, UInt32 n, std::string s)
+	{
+
+		HMODULE h;
+		CreateSymbolicLinkProc CreateSymbolicLink_func;
+		LPCSTR link = s.c_str();
+		LPCSTR target = s.c_str();
+		DWORD flag = 0x1;
+		h = LoadLibrary("kernel32");
+		CreateSymbolicLink_func = (CreateSymbolicLinkProc)GetProcAddress(h, "CreateSymbolicLink");
+		if (CreateSymbolicLink_func == NULL)
+		{
+
+			fprintf(stderr, "CreateSymbolicLinkA not available\n");
+
+		}
+		else
+		{
+			
+			if ((*CreateSymbolicLink_func)(link, target, flag) == 0)
+			{
+
+				fprintf(stderr, "CreateSymbolicLink failed: %d\n", GetLastError());
+
+			}
+
+		}
+
+		
 		if (n == 1) // spring
 		{
 
-			std::string SeasonDirectoryString = GetRuntimeDirectory() + "";
-			LPCSTR BaseDirectory = const_cast<char *>(SeasonDirectoryString.c_str());
-			bool b = CreateSymbolicLinkA(NormalDirectory, BaseDirectory, flag);
 
+			
 		}
 		else if (n == 2) // summer
 		{
@@ -41,7 +64,7 @@ namespace MyPluginNamespace {
 
 	bool RegisterFuncs(VMClassRegistry* registry) {
 		registry->RegisterFunction(
-			new NativeFunction1 <StaticFunctionTag, float, UInt32>("ChangeSeasonLod", "MyPluginScript", MyPluginNamespace::ChangeSeasonLod, registry));
+			new NativeFunction2 <StaticFunctionTag, float, UInt32, std::string>("ChangeSeasonLodDirectory", "MyPluginScript", MyPluginNamespace::ChangeSeasonLodDirectory, registry));
 
 		return true;
 	}
