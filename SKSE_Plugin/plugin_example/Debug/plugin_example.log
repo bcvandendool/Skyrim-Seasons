@@ -1,19 +1,23 @@
-﻿Build started 15-4-2016 17:23:48.
+﻿Build started 17-4-2016 20:50:35.
      1>Project "D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\plugin_example\plugin_example.vcxproj" on node 2 (Build target(s)).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(364,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
      1>ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\\..\common" /I"D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\\" /I"D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\\.." /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D PLUGIN_EXAMPLE_EXPORTS /D _WINDLL /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /FIcommon/IPrefix.h /analyze- /errorReport:prompt MyPlugin.cpp main.cpp
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\\..\common" /I"D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\\" /I"D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\\.." /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D PLUGIN_EXAMPLE_EXPORTS /D _WINDLL /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /FIcommon/IPrefix.h /analyze- /errorReport:prompt MyPlugin.cpp
          MyPlugin.cpp
-     1>d:\modding\skyrim\skyrim-seasons\skse_plugin\plugin_example\myplugin.cpp(2): warning C4005: 'WINVER' : macro redefinition
-                 d:\program files (x86)\windows kits\8.1\include\shared\sdkddkver.h(215) : see previous definition of 'WINVER'
-     1>d:\modding\skyrim\skyrim-seasons\skse_plugin\plugin_example\myplugin.cpp(3): warning C4005: '_WIN32_WINNT' : macro redefinition
-                 d:\modding\skyrim\skyrim-seasons\skse_plugin\common\iprefix.h(13) : see previous definition of '_WIN32_WINNT'
-     1>d:\modding\skyrim\skyrim-seasons\skse_plugin\plugin_example\myplugin.cpp(19): error C3861: 'CreateSymbolicLink': identifier not found
-         Generating Code...
-         Compiling...
-         main.cpp
-         Generating Code...
-     1>Done Building Project "D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\plugin_example\plugin_example.vcxproj" (Build target(s)) -- FAILED.
+     1>Project "D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\plugin_example\plugin_example.vcxproj" (1) is building "D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\skse\skse.vcxproj" (3:3) on node 1 (GetResolvedLinkLibs target(s)).
+     3>C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.Common.CurrentVersion.targets(1492,5): warning : The referenced project '..\..\common\common_vc9.vcxproj' does not exist.
+     3>Done Building Project "D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\skse\skse.vcxproj" (GetResolvedLinkLibs target(s)).
+     1>Link:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\SKSE\Plugins\Skyrim Seasons.dll" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /DEF:"exports.def" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"..\..\SKSE\Plugins\Skyrim Seasons.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\..\SKSE\Plugins\Skyrim Seasons.lib" /MACHINE:X86 /SAFESEH /DLL Debug\main.obj
+         Debug\MyPlugin.obj
+         "D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\Debug\common.lib"
+         "D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\Debug\skse.lib"
+     1>main.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+            Creating library ..\..\SKSE\Plugins\Skyrim Seasons.lib and object ..\..\SKSE\Plugins\Skyrim Seasons.exp
+     1>Skyrim Seasons.exp : warning LNK4070: /OUT:plugin_example.dll directive in .EXP differs from output filename '..\..\SKSE\Plugins\Skyrim Seasons.dll'; ignoring directive
+         plugin_example.vcxproj -> D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\plugin_example\..\..\SKSE\Plugins\Skyrim Seasons.dll
+     1>Done Building Project "D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\plugin_example\plugin_example.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:04.04
+Time Elapsed 00:00:02.48

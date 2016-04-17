@@ -5,13 +5,11 @@
 typedef BOOL(WINAPI* CreateSymbolicLinkProc) (LPCSTR, LPCSTR, DWORD);
 
 namespace MyPluginNamespace {
-	float ChangeSeasonLodDirectory(StaticFunctionTag *base, UInt32 n, std::string s)
+	float ChangeSeasonLodDirectory(StaticFunctionTag *base, UInt32 newSeason, UInt32 baseSeason, BSFixedString installLocation, BSFixedString folderLocation)
 	{
 
 		HMODULE h;
 		CreateSymbolicLinkProc CreateSymbolicLink_func;
-		LPCSTR link = s.c_str();
-		LPCSTR target = s.c_str();
 		DWORD flag = 0x1;
 		h = LoadLibrary("kernel32");
 		CreateSymbolicLink_func = (CreateSymbolicLinkProc)GetProcAddress(h, "CreateSymbolicLink");
@@ -19,12 +17,69 @@ namespace MyPluginNamespace {
 		{
 
 			fprintf(stderr, "CreateSymbolicLinkA not available\n");
+			return 0;
 
 		}
-		else
+		
+
+		if (newSeason == baseSeason)
 		{
+
+			std::string baseLoc = (std::string)(char *)installLocation.data + (std::string)(char *)folderLocation.data;
+
+			if ((*CreateSymbolicLink_func)(baseLoc.c_str(), baseLoc.c_str(), flag) == 0)
+			{
+
+				fprintf(stderr, "CreateSymbolicLink failed: %d\n", GetLastError());
+
+			}
+
+		}
+		else if (newSeason == 1) // spring
+		{
+
+			std::string baseLoc = (std::string)(char *)installLocation.data + "spring" + (std::string)(char *)folderLocation.data;
+
+			if ((*CreateSymbolicLink_func)(baseLoc.c_str(), baseLoc.c_str(), flag) == 0)
+			{
+
+				fprintf(stderr, "CreateSymbolicLink failed: %d\n", GetLastError());
+
+			}
 			
-			if ((*CreateSymbolicLink_func)(link, target, flag) == 0)
+		}
+		else if (newSeason == 2) // summer
+		{
+
+			std::string baseLoc = (std::string)(char *)installLocation.data + "summer" + (std::string)(char *)folderLocation.data;
+
+			if ((*CreateSymbolicLink_func)(baseLoc.c_str(), baseLoc.c_str(), flag) == 0)
+			{
+
+				fprintf(stderr, "CreateSymbolicLink failed: %d\n", GetLastError());
+
+			}
+
+		}
+		else if (newSeason == 3) // autumn
+		{
+
+			std::string baseLoc = (std::string)(char *)installLocation.data + "autumn" + (std::string)(char *)folderLocation.data;
+
+			if ((*CreateSymbolicLink_func)(baseLoc.c_str(), baseLoc.c_str(), flag) == 0)
+			{
+
+				fprintf(stderr, "CreateSymbolicLink failed: %d\n", GetLastError());
+
+			}
+
+		}
+		else // winter
+		{
+
+			std::string baseLoc = (std::string)(char *)installLocation.data + "winter" + (std::string)(char *)folderLocation.data;
+
+			if ((*CreateSymbolicLink_func)(baseLoc.c_str(), baseLoc.c_str(), flag) == 0)
 			{
 
 				fprintf(stderr, "CreateSymbolicLink failed: %d\n", GetLastError());
@@ -33,38 +88,12 @@ namespace MyPluginNamespace {
 
 		}
 
-		
-		if (n == 1) // spring
-		{
-
-
-			
-		}
-		else if (n == 2) // summer
-		{
-
-
-
-		}
-		else if (n == 3) // autumn
-		{
-
-
-
-		}
-		else // winter
-		{
-
-
-
-		}
-
-		return (float)n;
+		return (float)newSeason;
 	}
 
 	bool RegisterFuncs(VMClassRegistry* registry) {
 		registry->RegisterFunction(
-			new NativeFunction2 <StaticFunctionTag, float, UInt32, std::string>("ChangeSeasonLodDirectory", "MyPluginScript", MyPluginNamespace::ChangeSeasonLodDirectory, registry));
+			new NativeFunction4 <StaticFunctionTag, float, UInt32, UInt32, BSFixedString, BSFixedString>("ChangeSeasonLodDirectory", "SeasonChanger", MyPluginNamespace::ChangeSeasonLodDirectory, registry));
 
 		return true;
 	}
