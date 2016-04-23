@@ -12,6 +12,11 @@ namespace MyPluginNamespace {
 		CreateSymbolicLinkProc CreateSymbolicLink_func;
 		DWORD flag = 0x1;
 		h = LoadLibrary("kernel32");
+		std::string Season;
+		if (newSeason == 1) { Season = "Spring"; }
+		if (newSeason == 2) { Season = "Summer"; }
+		if (newSeason == 3) { Season = "Autumn"; }
+		if (newSeason == 4) { Season = "Winter"; }
 		CreateSymbolicLink_func = (CreateSymbolicLinkProc)GetProcAddress(h, "CreateSymbolicLink");
 		if (CreateSymbolicLink_func == NULL)
 		{
@@ -20,71 +25,14 @@ namespace MyPluginNamespace {
 			return 0;
 
 		}
-		
 
-		if (newSeason == baseSeason)
+		std::string baseLoc = (std::string)(char *)installLocation.data + (std::string)(char *)folderLocation.data;
+		std::string seasonLoc = (std::string)(char *)installLocation.data + Season + (std::string)(char *)folderLocation.data;
+
+		if ((*CreateSymbolicLink_func)(baseLoc.c_str(), seasonLoc.c_str(), flag) == 0)
 		{
 
-			std::string baseLoc = (std::string)(char *)installLocation.data + (std::string)(char *)folderLocation.data;
-
-			if ((*CreateSymbolicLink_func)(baseLoc.c_str(), baseLoc.c_str(), flag) == 0)
-			{
-
-				fprintf(stderr, "CreateSymbolicLink failed: %d\n", GetLastError());
-
-			}
-
-		}
-		else if (newSeason == 1) // spring
-		{
-
-			std::string baseLoc = (std::string)(char *)installLocation.data + "spring" + (std::string)(char *)folderLocation.data;
-
-			if ((*CreateSymbolicLink_func)(baseLoc.c_str(), baseLoc.c_str(), flag) == 0)
-			{
-
-				fprintf(stderr, "CreateSymbolicLink failed: %d\n", GetLastError());
-
-			}
-			
-		}
-		else if (newSeason == 2) // summer
-		{
-
-			std::string baseLoc = (std::string)(char *)installLocation.data + "summer" + (std::string)(char *)folderLocation.data;
-
-			if ((*CreateSymbolicLink_func)(baseLoc.c_str(), baseLoc.c_str(), flag) == 0)
-			{
-
-				fprintf(stderr, "CreateSymbolicLink failed: %d\n", GetLastError());
-
-			}
-
-		}
-		else if (newSeason == 3) // autumn
-		{
-
-			std::string baseLoc = (std::string)(char *)installLocation.data + "autumn" + (std::string)(char *)folderLocation.data;
-
-			if ((*CreateSymbolicLink_func)(baseLoc.c_str(), baseLoc.c_str(), flag) == 0)
-			{
-
-				fprintf(stderr, "CreateSymbolicLink failed: %d\n", GetLastError());
-
-			}
-
-		}
-		else // winter
-		{
-
-			std::string baseLoc = (std::string)(char *)installLocation.data + "winter" + (std::string)(char *)folderLocation.data;
-
-			if ((*CreateSymbolicLink_func)(baseLoc.c_str(), baseLoc.c_str(), flag) == 0)
-			{
-
-				fprintf(stderr, "CreateSymbolicLink failed: %d\n", GetLastError());
-
-			}
+			fprintf(stderr, "CreateSymbolicLink failed: %d\n", GetLastError());
 
 		}
 

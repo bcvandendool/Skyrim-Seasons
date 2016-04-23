@@ -1,4 +1,4 @@
-﻿Build started 17-4-2016 20:50:35.
+﻿Build started 23-4-2016 13:43:14.
      1>Project "D:\Modding\Skyrim\Skyrim-Seasons\SKSE_Plugin\plugin_example\plugin_example.vcxproj" on node 2 (Build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(364,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
      1>ClCompile:
@@ -20,4 +20,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.48
+Time Elapsed 00:00:05.23
