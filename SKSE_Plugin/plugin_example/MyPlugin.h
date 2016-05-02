@@ -3,7 +3,7 @@
 
 namespace MyPluginNamespace
 {
-	float ChangeSeasonLodDirectory(StaticFunctionTag *base, UInt32 newSeason, UInt32 baseSeason, BSFixedString installLocation, BSFixedString folderLocation);
+	float ChangeSeasonLodDirectory(StaticFunctionTag *base, UInt32 newSeason, BSFixedString installLocation, BSFixedString folderLocation);
 
 	bool RegisterFuncs(VMClassRegistry* registry);
 }

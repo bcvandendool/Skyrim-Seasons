@@ -5,7 +5,7 @@
 typedef BOOL(WINAPI* CreateSymbolicLinkProc) (LPCSTR, LPCSTR, DWORD);
 
 namespace MyPluginNamespace {
-	float ChangeSeasonLodDirectory(StaticFunctionTag *base, UInt32 newSeason, UInt32 baseSeason, BSFixedString installLocation, BSFixedString folderLocation)
+	float ChangeSeasonLodDirectory(StaticFunctionTag *base, UInt32 newSeason, BSFixedString installLocation, BSFixedString folderLocation)
 	{
 
 		HMODULE h;
@@ -41,7 +41,7 @@ namespace MyPluginNamespace {
 
 	bool RegisterFuncs(VMClassRegistry* registry) {
 		registry->RegisterFunction(
-			new NativeFunction4 <StaticFunctionTag, float, UInt32, UInt32, BSFixedString, BSFixedString>("ChangeSeasonLodDirectory", "SeasonChanger", MyPluginNamespace::ChangeSeasonLodDirectory, registry));
+			new NativeFunction3 <StaticFunctionTag, float, UInt32, BSFixedString, BSFixedString>("ChangeSeasonLodDirectory", "SeasonChanger", MyPluginNamespace::ChangeSeasonLodDirectory, registry));
 
 		return true;
 	}
