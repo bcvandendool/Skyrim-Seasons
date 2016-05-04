@@ -1,4 +1,4 @@
-ScriptName SeasonChanger extends ObjectReference 
+ScriptName SeasonChanger extends ObjectReference Hidden
 
 float Function ChangeSeasonLodDirectory(int newSeason, string installLocation, string dataLocation) global native
 
@@ -31,11 +31,11 @@ Function changeSeason(int newSeason)
 				String sourceFilePath = StringUtil.SubString(currentObjectString, 0, StringUtil.find(currentObjectString, ";"))
 				int formID = StringUtil.SubString(currentObjectString, StringUtil.find(currentObjectString, ";") + 1, StringUtil.find(currentObjectString, ":")) as int
 				String diffusePath = StringUtil.SubString(currentObjectString, StringUtil.find(currentObjectString, ":") + 1, StringUtil.find(currentObjectString, "|"))
-				String normalPath = StringUtil.SubString(currentObjectString, StringUtil.find(currentObejctString, "|") + 1, 0)
+				String normalPath = StringUtil.SubString(currentObjectString, StringUtil.find(currentObjectString, "|") + 1, 0)
 
-				Form currentObject = Game.GetFormFromFile(formID, sourceFilePath)
-				currentObject.setNthTexturePath(0, Season + diffusePath)
-				currentObject.setNthTexturePath(1, Season + normalPath)
+				currentObject = Game.GetFormFromFile(formID, sourceFilePath)
+				(currentObject as TextureSet).SetNthTexturePath(0, Season + diffusePath)
+				(currentObject as TextureSet).SetNthTexturePath(1, Season + normalPath)
 				
 			elseif (i == 1) ;WorldModelList
 				
@@ -44,12 +44,15 @@ Function changeSeason(int newSeason)
 				int formID = StringUtil.SubString(currentObjectString, StringUtil.find(currentObjectString, ";") + 1, StringUtil.find(currentObjectString, ":")) as int
 				String modelPath = StringUtil.SubString(currentObjectString, StringUtil.find(currentObject, ":") + 1, 0)
 
-				Form currentObject = Game.GetFormFromFile(formID, sourceFilePath)
+				currentObject = Game.GetFormFromFile(formID, sourceFilePath)
 				currentObject.SetWorldModelPath(Season[i] + modelPath)
 				
 			else ;LodList
 				
-				ChangeSeasonLodDirectory(i + 1, )
+				; install path ; directory path
+				String installPath = StringUtil.SubString(currentObjectString, 0, StringUtil.find(currentObjectString, ";"))
+				String directoryPath = StringUtil.SubString(currentObjectString, StringUtil.find(currentObjectString, ";") + 1, 0)
+				float f = ChangeSeasonLodDirectory(i + 1, installPath, directoryPath)
 				
 			endif
 			
