@@ -2,8 +2,19 @@ ScriptName SeasonChanger extends ObjectReference Hidden
 
 float Function ChangeSeasonLodDirectory(int newSeason, string installLocation, string dataLocation) global native
 
-Function changeSeason(int newSeason)
+Function changeSeason(int newSeason) global
+
+	; 1 = Spring
+	; 2 = Summer
+	; 3 = Autumn
+	; 4 = Winter
 	
+	if (newSeason == 0)
+		debug.notification("Season is 0. This should not be possible!")
+	endif 
+
+	debug.notification("Season will become: " + newSeason)
+
 	String ChangeListFile = "../SkyrimSeasons/ChangeLists/ChangeList.json"
 	String[] List = new String[4]
 	List[0] = "TextureSetList"
@@ -11,7 +22,7 @@ Function changeSeason(int newSeason)
 	List[2] = "LodList"
 	
 	int i = 0
-	while (i < 4)
+	while (i < 3)
 		
 		String[] Season = new String[4]
 		Season[0] = "Spring\\"
@@ -34,9 +45,13 @@ Function changeSeason(int newSeason)
 				String normalPath = StringUtil.SubString(currentObjectString, StringUtil.find(currentObjectString, "|") + 1, 0)
 
 				currentObject = Game.GetFormFromFile(formID, sourceFilePath)
-				(currentObject as TextureSet).SetNthTexturePath(0, Season + diffusePath)
-				(currentObject as TextureSet).SetNthTexturePath(1, Season + normalPath)
-				
+				if(currentObject)
+					(currentObject as TextureSet).SetNthTexturePath(0, Season[newSeason - 1] + diffusePath)
+					(currentObject as TextureSet).SetNthTexturePath(1, Season[newSeason - 1] + normalPath)
+				Else
+					debug.Notification("currentobject is null")
+				Endif
+
 			elseif (i == 1) ;WorldModelList
 				
 				; esm/esp path ; formID : model path
@@ -45,14 +60,14 @@ Function changeSeason(int newSeason)
 				String modelPath = StringUtil.SubString(currentObjectString, StringUtil.find(currentObject, ":") + 1, 0)
 
 				currentObject = Game.GetFormFromFile(formID, sourceFilePath)
-				currentObject.SetWorldModelPath(Season[i] + modelPath)
+				currentObject.SetWorldModelPath(Season[newSeason - 1] + modelPath)
 				
 			else ;LodList
 				
 				; install path ; directory path
 				String installPath = StringUtil.SubString(currentObjectString, 0, StringUtil.find(currentObjectString, ";"))
 				String directoryPath = StringUtil.SubString(currentObjectString, StringUtil.find(currentObjectString, ";") + 1, 0)
-				float f = ChangeSeasonLodDirectory(i + 1, installPath, directoryPath)
+				float f = ChangeSeasonLodDirectory(newSeason, installPath, directoryPath)
 				
 			endif
 			
@@ -64,4 +79,6 @@ Function changeSeason(int newSeason)
 		
 	EndWhile
 	
+	debug.Notification("Done changing.")
+
 EndFunction 
