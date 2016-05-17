@@ -2,7 +2,6 @@ ScriptName SeasonHandler extends ActiveMagicEffect
 
 Actor property playerRef auto
 ObjectReference property invisObject auto
-int property currentChangedSeason auto
 
 Event OnEffectStart(Actor akTarget, Actor akCaster)
 	
@@ -41,14 +40,10 @@ Function checkSeasonChange()
 
 		debug.notification("Month is " + Month + ". Season is " + i)
 
-		if(currentChangedSeason != i)
-			Game.DisablePlayerControls(false, false, false, false, false, true, true, true, 0)
-			SeasonChanger.changeSeason(i)
-			Game.EnablePlayerControls(true, true, true, true, true, true, true, true, 0)
-			currentChangedSeason = i
-		else
-			debug.notification("season wont change")
-		endif
-	endif 
+		Game.DisablePlayerControls(false, false, false, false, false, true, true, true, 0)
+		SeasonChanger.changeSeason(i)
+		Game.EnablePlayerControls(true, true, true, true, true, true, true, true, 0)
+
+	endif
 	
 EndFunction
