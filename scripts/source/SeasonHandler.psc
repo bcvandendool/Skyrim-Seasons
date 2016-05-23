@@ -22,27 +22,31 @@ EndEvent
 
 Function checkSeasonChange()
 	
+	int i = 0;
+	String Month = StringUtil.Substring(Utility.GameTimeToString(Utility.GetCurrentGameTime()), 0, 2)
+	if(Month == "03" || Month == "04" || Month == "05")
+		i = 1
+	elseif(Month == "06" || Month == "07" || Month == "08")
+		i = 2
+	elseif(Month == "09" || Month == "10" || Month == "11")
+		i = 3
+	elseif(Month == "12" || Month == "01" || Month == "02")
+		i = 4
+	else
+		debug.notification("Month " + Month + "does not exist?!")
+	endif
+
+	debug.notification("Month is " + Month + ". Season is " + i)
+
 	if (invisObject.IsInInterior() == true)
-
-		int i = 0;
-		String Month = StringUtil.Substring(Utility.GameTimeToString(Utility.GetCurrentGameTime()), 0, 2)
-		if(Month == "03" || Month == "04" || Month == "05")
-			i = 1
-		elseif(Month == "06" || Month == "07" || Month == "08")
-			i = 2
-		elseif(Month == "09" || Month == "10" || Month == "11")
-			i = 3
-		elseif(Month == "12" || Month == "01" || Month == "02")
-			i = 4
-		else
-			debug.notification("Month " + Month + "does not exist?!")
-		endif
-
-		debug.notification("Month is " + Month + ". Season is " + i)
 
 		Game.DisablePlayerControls(false, false, false, false, false, true, true, true, 0)
 		SeasonChanger.changeSeason(i)
 		Game.EnablePlayerControls(true, true, true, true, true, true, true, true, 0)
+
+	else
+
+		SeasonChanger.changeCells(playerRef, i)
 
 	endif
 	
