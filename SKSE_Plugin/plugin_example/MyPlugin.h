@@ -1,4 +1,5 @@
 #include "skse/PapyrusNativeFunctions.h"
+#include "skse/GameObjects.h"
 #include <string>
 
 namespace MyPluginNamespace

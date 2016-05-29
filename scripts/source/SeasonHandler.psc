@@ -36,18 +36,14 @@ Function checkSeasonChange()
 		debug.notification("Month " + Month + "does not exist?!")
 	endif
 
-	debug.notification("Month is " + Month + ". Season is " + i)
+	;debug.notification("Month is " + Month + ". Season is " + i)
 
 	if (invisObject.IsInInterior() == true)
 
 		Game.DisablePlayerControls(false, false, false, false, false, true, true, true, 0)
 		SeasonChanger.changeSeason(i)
 		Game.EnablePlayerControls(true, true, true, true, true, true, true, true, 0)
-
-	else
-
-		SeasonChanger.changeCells(playerRef, i)
-
+		
 	endif
 	
 EndFunction

@@ -42,7 +42,7 @@ namespace MyPluginNamespace {
 	bool RegisterFuncs(VMClassRegistry* registry) {
 		registry->RegisterFunction(
 			new NativeFunction3 <StaticFunctionTag, float, UInt32, BSFixedString, BSFixedString>("ChangeSeasonLodDirectory", "SeasonChanger", MyPluginNamespace::ChangeSeasonLodDirectory, registry));
-
+		
 		return true;
 	}
 } 
