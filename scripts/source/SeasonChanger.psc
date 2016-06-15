@@ -63,68 +63,41 @@ Function changeSeason(int newSeason) global
 				; esm/esp path ; formID : model path
 				; Skyrim.esm ; 0004FBB0 : Landscape\Trees\TreePineForest04.nif
 
-				ObjectReference currentObject
-
 				String sourceFilePath = StringUtil.SubString(currentObjectString, 0 , StringUtil.find(currentObjectString, ";"))
 				int formID = StringUtil.SubString(currentObjectString, StringUtil.find(currentObjectString, ";") + 1, StringUtil.find(currentObjectString, ":") - (StringUtil.find(currentObjectString, ";") + 1)) as int
 				String modelPath = StringUtil.SubString(currentObjectString, StringUtil.find(currentObjectString, ":") + 1, 0)
-				int cellFormID = 0x00009732
-				;debug.Notification(cellFormID)
+			
+				debug.Notification(sourceFilePath)
+				debug.Notification(formID)
+				debug.Notification(modelPath)
 
-				;int test = JsonUtil.FormListCount(ChangeListFile, "test")
-				;debug.Notification(test)
-				Cell currentCell = Game.GetFormFromFile(0x00009731, "Skyrim.esm") as cell
-				;debug.Notification(currentCell.GetFormID())
-				if(currentcell)
-					int refObjects = currentCell.GetNumRefs()
-					debug.Notification(refObjects)
-					while(refObjects)
+				Form currentObject = Game.GetFormFromFile(formID, sourceFilePath)
+				Utility.Wait(0.25)
+				if(currentObject)
 
-						refObjects -= 1
-						currentObject = currentCell.GetNthRef(refObjects, 0)
-						Form baseObject = currentObject.GetBaseObject()
-						if (baseObject.GetFormID() == 0x0004FBB0)
+					currentObject.SetWorldModelPath(Season[newSeason - 1] + modelPath)
 
-							debug.notification(currentObject.GetFormID())
-							if(currentObject)
-
-							currentObject.Disable(false)
-							currentObject.SetWorldModelPath("Summer/landscape/trees/treepineforest04.nif")
-							currentObject.Enable(false)
-
-							JsonUtil.FormListAdd(ChangeListFile, "objRefList", currentObject as form, true)
-							JsonUtil.Save(ChangeListFile, false)
-
-							endif
-
-						endif
-
-					EndWhile
 				Else
-					debug.Notification("cell does not exist")
-				endif 
-				;debug.Notification(sourceFilePath)
-				;debug.Notification(formID)
-				;debug.Notification(modelPath)
 
-				;currentObject = Game.GetFormFromFile(102435, sourceFilePath) as ObjectReference
-				;Utility.Wait(0.25)
-				;if(currentObject)
-					;currentObject.SetWorldModelPath(Season[newSeason - 1] + modelPath)
-				;	currentObject.disable()
-				;	currentObject.SetWorldModelPath("Summer/landscape/trees/treepineforest04.nif")
-				;	currentObject.enable()
-				;Else
-				;	debug.Notification("currentobject is null")
-				;endif
+					debug.Notification("currentobject is null")
+
+				endif
 				
-			else ;LodList
+			else ;LodList //TODO 
 				
+				bool test = true
+
 				; install path ; directory path
 				String installPath = StringUtil.SubString(currentObjectString, 0, StringUtil.find(currentObjectString, ";"))
 				String directoryPath = StringUtil.SubString(currentObjectString, StringUtil.find(currentObjectString, ";") + 1, 0)
-				float f = ChangeSeasonLodDirectory(newSeason, installPath, directoryPath)
-				
+				;float f = ChangeSeasonLodDirectory(newSeason, installPath, directoryPath)
+				if (test == true)
+					;float f = ChangeSeasonLodDirectory(2, installPath, directoryPath)
+					test = false
+				Else
+					;float f = ChangeSeasonLodDirectory(3, installPath, directoryPath)
+				EndIf
+
 			endif
 			
 		EndWhile
