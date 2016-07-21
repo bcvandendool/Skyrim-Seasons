@@ -1,4 +1,4 @@
-ScriptName SeasonChanger extends ObjectReference Hidden
+ScriptName SeasonChanger Hidden
 
 float Function ChangeSeasonLodDirectory(int newSeason, string installLocation, string dataLocation) global native
 
@@ -13,7 +13,7 @@ Function changeSeason(int newSeason) global
 		debug.notification("Season is 0. This should not be possible!")
 	endif 
 
-	String ChangeListFile = "../SkyrimSeasons/ChangeLists/ChangeList"
+	String ChangeListFile = "../DynamicSeasons/ChangeLists/ChangeList"
 	String[] List = new String[4]
 	List[0] = "TextureSetList"
 	List[1] = "WorldModelList"
@@ -83,20 +83,14 @@ Function changeSeason(int newSeason) global
 
 				endif
 				
-			else ;LodList //TODO 
-				
-				bool test = true
+			else ;LodList
 
 				; install path ; directory path
+
 				String installPath = StringUtil.SubString(currentObjectString, 0, StringUtil.find(currentObjectString, ";"))
 				String directoryPath = StringUtil.SubString(currentObjectString, StringUtil.find(currentObjectString, ";") + 1, 0)
-				;float f = ChangeSeasonLodDirectory(newSeason, installPath, directoryPath)
-				if (test == true)
-					;float f = ChangeSeasonLodDirectory(2, installPath, directoryPath)
-					test = false
-				Else
-					;float f = ChangeSeasonLodDirectory(3, installPath, directoryPath)
-				EndIf
+
+				float f = ChangeSeasonLodDirectory(newSeason, installPath, directoryPath)
 
 			endif
 			
@@ -105,5 +99,7 @@ Function changeSeason(int newSeason) global
 		i += 1
 		
 	EndWhile
+
+	;JsonUtil.setStringValue("../DynamicSeasons/LODCheck", "ReloadLOD", "true")
 
 EndFunction 

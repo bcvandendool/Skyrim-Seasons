@@ -36,14 +36,36 @@ Function checkSeasonChange()
 		debug.notification("Month " + Month + "does not exist?!")
 	endif
 
-	;debug.notification("Month is " + Month + ". Season is " + i)
+	String ChangeListFile = "../DynamicSeasons/ChangeLists/ChangeList"
 
 	if (invisObject.IsInInterior() == true)
 
 		Game.DisablePlayerControls(false, false, false, false, false, true, true, true, 0)
 		SeasonChanger.changeSeason(i)
+		JsonUtil.SetStringValue(ChangeListFile, "LODChange", "true")
 		Game.EnablePlayerControls(true, true, true, true, true, true, true, true, 0)
 		
-	endif
+	elseif (invisObject.IsInInterior() == false && JsonUtil.GetStringValue(ChangeListFile, "LODChange", "missing") == "true")
+
+		Game.FadeOutGame(true, true, 0.0, 999)
+		Game.DisablePlayerControls(true, true, true, true, true, true, true, true, 0)
+		Game.saveGame("DyamicSeasonsSave")
+		JsonUtil.Load(ChangeListFile)
+		Debug.Notification(JsonUtil.GetStringValue(ChangeListFile, "LODChange", "missing"))
+		Utility.Wait(10.0)
+		Debug.Notification("after")
+		if(JsonUtil.GetStringValue(ChangeListFile, "LODChange", "missing") == "true")
+
+			JsonUtil.SetStringValue(ChangeListFile, "LODChange", "false")
+			JsonUtil.Save(ChangeListFile)
+			While(JsonUtil.IsPendingSave(ChangeListFile))
+				Utility.Wait(0.1)
+			EndWhile
+			Game.QuitToMainMenu()
+
+		Endif
+		Game.EnablePlayerControls(true, true, true, true, true, true, true, true, 0)
+
+	Endif
 	
 EndFunction

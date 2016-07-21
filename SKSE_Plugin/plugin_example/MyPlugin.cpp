@@ -33,6 +33,7 @@ namespace MyPluginNamespace {
 		{
 
 			fprintf(stderr, "CreateSymbolicLink failed: %d\n", GetLastError());
+			return -1;
 
 		}
 

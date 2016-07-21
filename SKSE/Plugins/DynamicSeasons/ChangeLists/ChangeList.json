@@ -1,0 +1,12 @@
+{
+	"string" : 
+	{
+		"lodchange" : "False"
+	},
+	"stringList" : 
+	{
+		"lodlist" : [ "D:/Games/SteamLibrary/steamapps/common/Skyrim/Data/textures;terrain/tamriel/trees" ],
+		"texturesetlist" : [ "Skyrim.esm;3086:Landscape/Dirt01.dds|Landscape/Dirt01_n.dds", "Skyrim.esm;3087:Landscape/Dirt02.dds|Landscape/Dirt02_n.dds" ],
+		"worldmodellist" : [ "Skyrim.esm;326576:Landscape/Trees/TreePineForest04.nif" ]
+	}
+}
