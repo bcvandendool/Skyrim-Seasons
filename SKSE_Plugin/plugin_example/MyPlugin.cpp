@@ -8,7 +8,7 @@ namespace MyPluginNamespace {
 	float ChangeSeasonLodDirectory(StaticFunctionTag *base, UInt32 newSeason, BSFixedString installLocation, BSFixedString folderLocation)
 	{
 
-		HMODULE h;
+/*		HMODULE h;
 		CreateSymbolicLinkProc CreateSymbolicLink_func;
 		DWORD flag = 0x1;
 		h = LoadLibrary("kernel32");
@@ -35,9 +35,23 @@ namespace MyPluginNamespace {
 			fprintf(stderr, "CreateSymbolicLink failed: %d\n", GetLastError());
 			return -1;
 
+		} */
+
+		std::string Season;
+		if (newSeason == 1) { Season = "Spring"; }
+		else if (newSeason == 2) { Season = "Summer"; }
+		else if (newSeason == 3) { Season = "Autumn"; }
+		else if (newSeason == 4) { Season = "Winter"; }
+
+		if (CopyFile(((std::string)(char *)installLocation.data + "/" + Season + "/" + (std::string)(char *)folderLocation.data).c_str(), ((std::string)installLocation.data + "/" + (std::string)folderLocation.data).c_str(), false) != 0)
+		{
+
+			return (float)newSeason;
+
 		}
 
-		return (float)newSeason;
+
+		return 0;
 	}
 
 	bool RegisterFuncs(VMClassRegistry* registry) {
