@@ -91,7 +91,18 @@ Function changeSeason(int newSeason) global
 				String directoryPath = StringUtil.SubString(currentObjectString, StringUtil.find(currentObjectString, ";") + 1, 0)
 
 				float f = ChangeSeasonLodDirectory(newSeason, installPath, directoryPath)
-
+				
+				if (f == 0)
+				
+					debug.Notification("succesfully changed lod")
+				
+				else
+				
+					;  installPath + " / " + directoryPath +
+					debug.Notification("Failed to change Lod: " + " errorcode: " + f)
+				
+				endif
+				
 			endif
 			
 		EndWhile

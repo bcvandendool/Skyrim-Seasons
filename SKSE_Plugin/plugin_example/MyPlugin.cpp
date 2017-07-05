@@ -46,12 +46,16 @@ namespace MyPluginNamespace {
 		if (CopyFile(((std::string)(char *)installLocation.data + "/" + Season + "/" + (std::string)(char *)folderLocation.data).c_str(), ((std::string)installLocation.data + "/" + (std::string)folderLocation.data).c_str(), false) != 0)
 		{
 
-			return (float)newSeason;
+			return 0;
+
+		}
+		else
+		{
+
+			return GetLastError();
 
 		}
 
-
-		return 0;
 	}
 
 	bool RegisterFuncs(VMClassRegistry* registry) {
