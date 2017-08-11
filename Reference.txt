@@ -1,0 +1,42 @@
+/Data
+	/textures
+		/terrain
+			/tamriel
+				/trees
+					/..
+		/Winter
+			/terrain
+				/tamriel
+					/trees
+						/..
+		/Summer
+			/terrain
+				/tamriel
+					/trees
+						/...
+		/Spring
+			/terrain
+				/tamriel
+					/trees
+						/..
+		/Autumn
+			/terrain
+				/tamriel
+					/trees
+						/..
+
+file types:
+	Flora (FLOR)
+		-	Model/MODL - Model Filename	
+		-	FULL - Name
+	Grass (GRAS)
+		-	Model/MODL - Model Filename
+	Landscape Texture (LTEX)
+		-	TNAM - Texture Set
+		- 	MNAM - Material Type
+		-	Grasses/GNAM - Grass
+	Tree (TREE)
+		-	Model/MODL - Model Filename
+	Texture Set (TXST)
+		-	Textures (RGB/A)/TX00 - Diffuse
+		- 	Textures (RGB/A)/TX01 - Normal/Gloss
