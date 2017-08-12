@@ -6,14 +6,15 @@ function Initialize: Integer;
 var 
 	i, i2, i3, test: integer;
 	rec: IInterface;
-	x, y, s, s2, MOdirectory: string;
-	sl, splitter, splitter2, filelist: TStringList;
+	x, y, s, s2, MODirectory: string;
+	sl, splitter, splitter2, filelist, textureList: TStringList;
 	element: IwbElement;
 begin
 	InitializeMXPF;
 	DefaultOptionsMXPF;
 	sl := TStringList.Create;
 	filelist := TStringList.Create;
+	textureList := TStringList.Create;
 	
 	LoadRecords('FLOR');
 	sl.Add('Flora:');
@@ -111,21 +112,35 @@ begin
 	PrintMXPFReport;
 	FinalizeMXPF;
 
-	MOdirectory :=
+//	MODirectory := SelectDirectory('Please select your resource location.', '', '', nil);
+	sl.Add(MOdirectory);
+
 
 	for i := 0 to filelist.Count-1 do begin
 
-		s := filelist[i]
+		s := filelist[i];
 		if Matches(s, '*.dds') then
 		begin
 
+			sl.Add(s);
 
-
+		end
 		else if Matches(s, '*.nif') then
 		begin
 
+			try
+				NifTextureListResource('', MODirectory + '\meshes\' + Lowercase(s), textureList)
+			except end;
 
-		
+			for i2 := 0 to textureList.Count-1 do begin
+
+				sl.Add(textureList[i2]);
+
+			end;
+
+			sl.Add(MODirectory + '\meshes\' + Lowercase(s) + ' says hi!');
+
+		end
 		else
 		begin
 
