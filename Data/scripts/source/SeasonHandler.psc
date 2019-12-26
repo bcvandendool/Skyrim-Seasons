@@ -6,12 +6,12 @@ ObjectReference property invisObject auto
 Event OnEffectStart(Actor akTarget, Actor akCaster)
 	
 	RegisterForSingleUpdate(7)
-	debug.notification("player changed cells")
+	debug.notification("player has changed cells")
 	Utility.Wait(0.1)
 	invisObject.MoveTo(playerRef)
 	checkSeasonChange()
 	
-EndEvent 
+EndEvent
 
 Event OnUpdate()
 	
@@ -22,6 +22,7 @@ EndEvent
 
 Function checkSeasonChange()
 	
+	debug.notification("Checking if season needs to be changed")
 	int i = 0;
 	String Month = StringUtil.Substring(Utility.GameTimeToString(Utility.GetCurrentGameTime()), 0, 2)
 	if(Month == "03" || Month == "04" || Month == "05")
@@ -40,16 +41,19 @@ Function checkSeasonChange()
 
 	if (invisObject.IsInInterior() == true)
 
+		debug.notification("IsInInterrior() == true")
 		Game.DisablePlayerControls(false, false, false, false, false, true, true, true, 0)
+		debug.notification("1")
 		SeasonChanger.changeSeason(i)
 		JsonUtil.SetStringValue(ChangeListFile, "LODChange", "true")
 		Game.EnablePlayerControls(true, true, true, true, true, true, true, true, 0)
-		
+
 	elseif (invisObject.IsInInterior() == false && JsonUtil.GetStringValue(ChangeListFile, "LODChange", "missing") == "true")
 
-		Game.FadeOutGame(true, true, 0.0, 999)
+		debug.notification("IsInInterior() == false")
+		Game.FadeOutGame(true, true, 0.0, 999.9)
 		Game.DisablePlayerControls(true, true, true, true, true, true, true, true, 0)
-		Game.saveGame("DyamicSeasonsSave")
+		Game.saveGame("DynamicSeasonsSave")
 		JsonUtil.Load(ChangeListFile)
 		Debug.Notification(JsonUtil.GetStringValue(ChangeListFile, "LODChange", "missing"))
 		Utility.Wait(10.0)
@@ -57,12 +61,14 @@ Function checkSeasonChange()
 		if(JsonUtil.GetStringValue(ChangeListFile, "LODChange", "missing") == "true")
 
 			JsonUtil.SetStringValue(ChangeListFile, "LODChange", "false")
-			JsonUtil.Save(ChangeListFile)
+			JsonUtil.Save(ChangeListFile) 
+			;TODO: Check Game.load() for use instead of quitting and making the player reload themselves
+			; otherwise try to hook into it via an skse plugin as the funtion is from skse
 			While(JsonUtil.IsPendingSave(ChangeListFile))
 				Utility.Wait(0.1)
 			EndWhile
 			Game.QuitToMainMenu()
-
+			
 		Endif
 		Game.EnablePlayerControls(true, true, true, true, true, true, true, true, 0)
 

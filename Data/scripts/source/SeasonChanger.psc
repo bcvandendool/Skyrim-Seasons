@@ -4,6 +4,8 @@ float Function ChangeSeasonLodDirectory(int newSeason, string installLocation, s
 
 Function changeSeason(int newSeason) global
 
+	debug.notification("2")
+
 	; 1 = Spring
 	; 2 = Summer
 	; 3 = Autumn
@@ -29,14 +31,14 @@ Function changeSeason(int newSeason) global
 		Season[2] = "Autumn/"
 		Season[3] = "Winter/"
 		StringListCount = JsonUtil.StringListCount(ChangeListFile, List[i])
-		;debug.Notification(List[i])
+		debug.Notification(List[i])
 		;debug.Notification(StringListCount)
 
 		while (StringListCount)
 			
 			StringListCount -= 1
 			String currentObjectString = JsonUtil.StringListGet(ChangeListFile, List[i], StringListCount)
-			;debug.Notification(currentObjectString)
+			debug.Notification(currentObjectString)
 
 			if (i == 0) ;TextureSetList
 				

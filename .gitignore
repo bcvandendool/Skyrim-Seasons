@@ -2,6 +2,23 @@ SKSE_Plugin/common/
 SKSE_Plugin/skse/
 SKSE_Plugin/Debug/
 
+src/common
+src/skse64/CommonLibSSE
+src/skse64/skse64
+src/skse64/skse64_common
+src/skse64/skse64_loader
+src/skse64/skse64_loader_common
+src/skse64/skse64_steam_loader
+src/skse64/x64
+src/skse64/x64_v142
+src/skse64/xbyak
+src/skse64/skse64.sln
+src/skse64/skse64_license.txt
+
+src/skse64/SkyrimSeasonsPlugin/x64
+
+*.exp
+
 meta.ini
 
 # C++
