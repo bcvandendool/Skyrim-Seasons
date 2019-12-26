@@ -5,6 +5,21 @@
 
 #include "SKSE/API.h"
 #include "LodHandler.h"
+#include "RE/UI.h"
+
+void MessageHandler(SKSEMessagingInterface::Message* a_msg)
+{
+
+	if(a_msg->type == SKSEMessagingInterface::kMessage_DataLoaded)
+	{
+
+		RE::UI* ui = RE::UI::GetSingleton();
+		ui->AddEventSink(&LodHandler::g_menuOpenCloseEventHandler);
+		_MESSAGE("[MESSAGE] Menu open/close event handler sinked");
+		
+	}
+	
+}
 
 extern "C" {
 	bool SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info)
