@@ -4,7 +4,7 @@
 #include "version.h"  // VERSION_VERSTRING, VERSION_MAJOR
 
 #include "SKSE/API.h"
-
+#include "LodHandler.h"
 
 extern "C" {
 	bool SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info)
@@ -45,6 +45,14 @@ extern "C" {
 			return false;
 		}
 
+		auto papyrus = SKSE::GetPapyrusInterface();
+		if(!papyrus->Register(LodHandler::RegisterFuncs))
+		{
+			
+			return false;
+			
+		}
+		
 		return true;
 	}
 };
