@@ -1,0 +1,4 @@
+LIBRARY	"SkyrimSeasonsPlugin"
+EXPORTS
+SKSEPlugin_Query
+SKSEPlugin_Load
