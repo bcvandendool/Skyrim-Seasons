@@ -60,7 +60,7 @@ Function checkSeasonChange()
 		Debug.Notification("after")
 		if(JsonUtil.GetStringValue(ChangeListFile, "LODChange", "missing") == "true")
 
-			JsonUtil.SetStringValue(ChangeListFile, "LODChange", "false")
+			;JsonUtil.SetStringValue(ChangeListFile, "LODChange", "false")
 			JsonUtil.Save(ChangeListFile) 
 			;TODO: Check Game.load() for use instead of quitting and making the player reload themselves
 			; otherwise try to hook into it via an skse plugin as the funtion is from skse

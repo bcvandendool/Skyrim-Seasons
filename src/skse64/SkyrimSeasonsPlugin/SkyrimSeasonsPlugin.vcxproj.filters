@@ -26,6 +26,9 @@
     <ClInclude Include="include\LodHandler.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\json.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="version.rc" />

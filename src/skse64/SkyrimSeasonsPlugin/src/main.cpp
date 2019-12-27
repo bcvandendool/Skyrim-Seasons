@@ -6,6 +6,9 @@
 #include "SKSE/API.h"
 #include "LodHandler.h"
 #include "RE/UI.h"
+#include "skse64/PluginAPI.h"
+
+static SKSEMessagingInterface* g_messaging = nullptr;
 
 void MessageHandler(SKSEMessagingInterface::Message* a_msg)
 {
@@ -15,7 +18,7 @@ void MessageHandler(SKSEMessagingInterface::Message* a_msg)
 
 		RE::UI* ui = RE::UI::GetSingleton();
 		ui->AddEventSink(&LodHandler::g_menuOpenCloseEventHandler);
-		_MESSAGE("[MESSAGE] Menu open/close event handler sinked");
+		_MESSAGE("Menu open/close event handler sinked");
 		
 	}
 	
@@ -34,7 +37,7 @@ extern "C" {
 		a_info->infoVersion = SKSE::PluginInfo::kVersion;
 		a_info->name = "SkyrimSeasonsPlugin";
 		a_info->version = SSP_VERSION_MAJOR;
-
+		
 		if (a_skse->IsEditor()) {
 			_FATALERROR("Loaded in editor, marking as incompatible!\n");
 			return false;
@@ -61,9 +64,29 @@ extern "C" {
 		}
 
 		auto papyrus = SKSE::GetPapyrusInterface();
-		if(!papyrus->Register(LodHandler::RegisterFuncs))
+		if(papyrus->Register(LodHandler::RegisterFuncs))
 		{
+
+			_MESSAGE("Papyrus function registration succesful");
 			
+		} else
+		{
+
+			_FATALERROR("Papyrus function registration failed");
+			return false;
+			
+		}
+
+		g_messaging = static_cast<SKSEMessagingInterface*>(a_skse->QueryInterface(SKSE::InterfaceID::kMessaging));
+		if(g_messaging->RegisterListener(a_skse->GetPluginHandle(), "SKSE", MessageHandler))
+		{
+
+			_MESSAGE("Messaging interface registration succesful");
+			
+		} else
+		{
+
+			_FATALERROR("Messaging interface registration failed!\n");
 			return false;
 			
 		}
