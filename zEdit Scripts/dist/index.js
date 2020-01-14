@@ -6,11 +6,10 @@ registerPatcher({
     info: info,
     // array of the game modes your patcher works with
     // see docs://Development/APIs/xelib/Setup for a list of game modes
-    gameModes: [xelib.gmSSE, xelib.gmTES5, xelib.gmTES4,  
-                xelib.gmFO4, xelib.gmFNV,  xelib.gmFO3],
+    gameModes: [xelib.gmSSE, xelib.gmTES5],
     settings: {
         // The label is what gets displayed as the settings tab's label
-        label: 'Example Patcher',
+        label: 'Skyrim-Seasons',
         // if you set hide to true the settings tab will not be displayed
         //hide: true,
         templateUrl: `${patcherUrl}/partials/settings.html`,
@@ -30,8 +29,8 @@ registerPatcher({
         // you want to use a unique patch file for your patcher instead of the
         // default zPatch.esp plugin file.  (using zPatch.esp is recommended)
         defaultSettings: {
-            exampleSetting: 'hello world',
-            patchFileName: 'examplePatch.esp'
+            modDirectory: 'default',
+            //patchFileName: 'examplePatch.esp'
         }
     },
     // optional array of required filenames.  can omit if empty.
@@ -40,62 +39,66 @@ registerPatcher({
         // Optional.  You can program strict exclusions here.  These exclusions
         // cannot be overridden by the user.  This function can be removed if you 
         // don't want to hard-exclude any files.
-        let gameName = xelib.GetGlobal('GameName');
-        return filenames.subtract([`${gameName}.esm`]);
+        //let gameName = xelib.GetGlobal('GameName');
+        return filenames.subtract([`Dragonborn.esm`]);
     },
     execute: (patchFile, helpers, settings, locals) => ({
         initialize: function() {
-            // Optional function, omit if empty.
-            // Perform anything that needs to be done once at the beginning of the
-            // patcher's execution here.  This can be used to cache records which don't
-            // need to be patched, but need to be referred to later on.  Store values
-            // on the locals variable to refer to them later in the patching process.
-            helpers.logMessage(settings.exampleSetting);
-            // this line shows you how to load records using the loadRecords helper
-            // function and store them on locals for the purpose of caching
-            locals.weapons = helpers.loadRecords('WEAP');
+
+            settings.modDirectory = fh.selectDirectory('Please select the install location of Skyrim-Seasons', settings.modDirectory)
+
+            locals.obj = {
+                string: {
+                    lodchange: 'False',
+                    moddirectory: settings.modDirectory
+                },
+                stringList: {
+                    lodlist: [],
+                    texturesetlist: [],
+                    worldmodellist: []
+                }
+            };
+
         },
         // required: array of process blocks. each process block should have both
         // a load and a patch function.
         process: [{
             load: {
-                signature: 'ARMO',
-                filter: function(record) {
-                    // return false to filter out (ignore) a particular record
-                    return parseFloat(xelib.GetValue(record, 'DNAM')) > 20;
-                }
+                signature: 'GRAS'
             },
             patch: function(record) {
-                // change values on the record as required
-                // you can also remove the record here, but it is discouraged.
-                // (try to use filters instead.)
-                helpers.logMessage(`Patching ${xelib.LongName(record)}`);
-                xelib.SetValue(record, 'DNAM', '30');
+                //helpers.logMessage(`Looking at ${xelib.LongName(record)}`);
+                locals.obj.stringList.worldmodellist.push(xelib.GetFileName(xelib.GetElementFile(xelib.GetMasterRecord(record))) + ';' + xelib.GetFormID(xelib.GetMasterRecord(record)) + ';' + xelib.GetValue(xelib.GetWinningOverride(record), 'Model\\MODL - Model Filename'));
             }
         }, {
-            // loads all REFRs that place Weapons
-            records: filesToPatch => {
-                let records = filesToPatch.map(f => {
-                    return xelib.GetRefrs(f, 'WEAP');
-                });
-                return Array.prototype.concat.apply([], records);
+            load: {
+                signature: 'LTEX'
             },
-            // patches REFRs that place weapons to be initially disabled
             patch: function(record) {
-                xelib.SetFlag(record, 'Record Header\\Record Flags', 'Initially Disabled', true);
+                //helpers.logMessage(`Looking at ${xelib.LongName(record)}`);
+                if(xelib.GetUIntValue(xelib.GetWinningOverride(record), 'TNAM - Texture Set') != 0)
+                {
+                    var textureSet = xelib.GetRecord(xelib.GetElementFile(xelib.GetWinningOverride(record)), xelib.GetUIntValue(xelib.GetWinningOverride(record), 'TNAM - Texture Set'));
+                    locals.obj.stringList.texturesetlist.push(xelib.GetFileName(xelib.GetElementFile(xelib.GetMasterRecord(record))) + ';' + xelib.GetFormID(xelib.GetMasterRecord(record)) + ';' + xelib.GetValue(xelib.GetWinningOverride(textureSet), 'Textures (RGB/A)\\TX00 - Difuse') + '|' + xelib.GetValue(xelib.GetWinningOverride(textureSet), 'Textures (RGB/A)\\TX01 - Normal/Gloss'));
+                }
+            }
+        }, {
+            load: {
+                signature: 'TREE'
+            },
+            patch: function(record) {
+                //helpers.logMessage(`Looking at ${xelib.LongName(record)}`);
+                locals.obj.stringList.worldmodellist.push(xelib.GetFileName(xelib.GetElementFile(xelib.GetMasterRecord(record))) + ';' + xelib.GetFormID(xelib.GetMasterRecord(record)) + ';' + xelib.GetValue(xelib.GetWinningOverride(record), 'Model\\MODL - Model Filename'));
             }
         }],
         finalize: function() {
-            // Optional function, omit if empty. Perform any cleanup here.
-            // note that the framework automatically removes unused masters as
-            // well as ITPO and ITM records, so you don't need to do that
-            helpers.logMessage(`Found ${locals.weapons.length} cached weapons records.`);
-            // this creates a new record at the same form ID each time the patch
-            // is rebuilt so it doesn't get lost when the user rebuilds a patch
-            // plugin and loads a save
-            let weapon  = xelib.AddElement(patchFile, 'WEAP\\WEAP');
-            helpers.cacheRecord(weapon, 'MEPz_BlankWeapon');
-            xelib.AddElementValue(weapon, 'FULL', 'Blank Weapon');
+            
+            var json = JSON.stringify(locals.obj);
+            var fs = require('fs');
+            fs.writeFile('test.json', json, 'utf8', function(error) {
+                if(error) throw error;
+            });
+
         }
     })
 });

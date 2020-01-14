@@ -2,18 +2,18 @@ SKSE_Plugin/common/
 SKSE_Plugin/skse/
 SKSE_Plugin/Debug/
 
-src/common
-src/skse64/CommonLibSSE
-src/skse64/skse64
-src/skse64/skse64_common
-src/skse64/skse64_loader
-src/skse64/skse64_loader_common
-src/skse64/skse64_steam_loader
-src/skse64/x64
-src/skse64/x64_v142
-src/skse64/xbyak
-src/skse64/skse64.sln
-src/skse64/skse64_license.txt
+SKSE64_Plugin/common
+SKSE64_Plugin/skse64/CommonLibSSE
+SKSE64_Plugin/skse64/skse64
+SKSE64_Plugin/skse64/skse64_common
+SKSE64_Plugin/skse64/skse64_loader
+SKSE64_Plugin/skse64/skse64_loader_common
+SKSE64_Plugin/skse64/skse64_steam_loader
+SKSE64_Plugin/skse64/x64
+SKSE64_Plugin/skse64/x64_v142
+SKSE64_Plugin/skse64/xbyak
+SKSE64_Plugin/skse64/skse64.sln
+SKSE64_Plugin/skse64/skse64_license.txt
 
 src/skse64/SkyrimSeasonsPlugin/x64
 
